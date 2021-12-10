@@ -1,6 +1,38 @@
-type ExampleEntity @entity {
+type Game @entity {
   id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  approved: Bytes! # address
+  dragonsMinted: BigInt!
+  dragonsStaked: BigInt!
+  dragonsStolen: BigInt!
+  wizardsMinted: BigInt!
+  wizardsStaked: BigInt!
+  wizardsStolen: BigInt!
+}
+
+type Player @entity {
+  id: ID!
+  dragonsLost: BigInt!
+  dragonsOwned: BigInt!
+  dragonsStolen: BigInt!
+  mints: BigInt!
+  wizardsLost: BigInt!
+  wizardsOwned: BigInt!
+  wizardsStolen: BigInt!
+  tokensOwned: BigInt!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+}
+
+enum TokenName {
+  Wizard
+  Dragon
+}
+
+type Token @entity {
+  id: ID!
+  name: TokenName!
+  tokenId: BigInt!
+  balance: BigInt!
+  mintTx: String!
+  owner: Player!
+  isStolen: Boolean!
+  isStaked: Boolean!
 }
